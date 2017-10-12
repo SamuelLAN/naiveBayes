@@ -24,7 +24,7 @@ class Data:
 
     DATA_PATH = r'data/data.pickle'
 
-    DEBUG = True
+    DEBUG = False
 
     def __init__(self):
         self.__loadingTest = False
@@ -200,6 +200,3 @@ class Data:
         else:
             sys.stdout.write(msg)
             sys.stdout.flush()
-
-
-o_data = Data()

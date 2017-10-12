@@ -4,11 +4,22 @@ import load
 import numpy as np
 
 
+'''
+ Navie Bayes Classifier
+
+ 效果：
+    accuracy: 0.985732
+    precision: 0.965066
+    recall: 0.983096
+'''
 class NaiveBayesClassifier:
     def __init__(self):
         self.__oData = load.Data()
 
 
+    '''
+     主程序
+    '''
     def run(self):
         print 'training: calculating bayes probability ...'
         self.__train()
@@ -38,34 +49,6 @@ class NaiveBayesClassifier:
         # P(x = word | y = spam)
         self.__pWordSpam = np.log10(
             (data.spamWordArray + smooth) / (data.spamTrainWordNum + smooth_const) )
-
-
-    def question1(self):
-        self.__train()
-
-        p_word_ham = np.power(10, self.__pWordHam)
-        p_word_spam = np.power(10, self.__pWordSpam)
-
-        ratio = list(p_word_spam / p_word_ham)
-        ratio_list = []
-        for i, val in enumerate(ratio):
-            ratio_list.append([i, val])
-
-        def __sort(a, b):
-            if a[1] > b[1]:
-                return -1
-            elif a[1] == b[1]:
-                return 0
-            else:
-                return 1
-
-        ratio_list.sort(__sort)
-
-        print 'top 10 ratio words:'
-        string = ''
-        for (voc_index, p) in ratio_list[0: 10]:
-            string += self.__oData.vocDictRev[voc_index] + ' '
-        print string
 
 
     # 计算测试集准确率
@@ -98,21 +81,6 @@ class NaiveBayesClassifier:
         print 'recall: %.6f' % recall
 
 
-    def test(self):
-        data = self.__oData
-
-        textData = data.hamTestData[0]
-
-        print 'ham text: '
-        string = ''
-        for word, times in textData.iteritems():
-            string += word + ' '
-        print string
-        print ''
-
-        print self.classify(textData)
-
-
     '''
      若为 spam 返回 true，若为 ham 返回 false
     '''
@@ -132,5 +100,3 @@ class NaiveBayesClassifier:
 
 o_classifier = NaiveBayesClassifier()
 o_classifier.run()
-# o_classifier.question1()
-# o_classifier.test()
